@@ -10,7 +10,6 @@ const personSchema = new Schema({
   favoriteFoods: [String]
 })
 
-
 let Person = mongoose.model('Person', personSchema)
 
 const createAndSavePerson = (done) => {
