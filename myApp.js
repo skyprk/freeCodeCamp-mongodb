@@ -90,13 +90,19 @@ const removeById = (personId, done) => {
 const removeManyPeople = (done) => {
   const nameToRemove = "Mary";
 
-  done(null /*, data*/);
+  Person.remove({ name: nameToRemove }, (err, data) => {
+    if (err) return console.error(err)
+    
+    done(null, data)
+  })
 };
 
 const queryChain = (done) => {
   const foodToSearch = "burrito";
 
-  done(null /*, data*/);
+  Person
+    .find({ favoriteFoods: foodToSearch })
+    .sort()
 };
 
 /** **Well Done !!**
