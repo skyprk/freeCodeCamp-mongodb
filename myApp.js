@@ -49,31 +49,45 @@ const findOneByFood = (food, done) => {
 };
 
 const findPersonById = (personId, done) => {
-    Person.findById(personId, (err, data) => {
-        if (err) return console.error(err)
-        done(null, data)
-    })
+  Person.findById(personId, (err, data) => {
+      if (err) return console.error(err)
+      done(null, data)
+  })
 };
 
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
   Person.findById(personId, (err, person) => {
-      if (err) return console.error(err)
-    
-      person.favoriteFoods.push(foodToAdd)
+    if (err) return console.error(err)
 
-      person.save((err, updatedPerson) => {
-        if (err) return console.error(err)
-        done(null, updatedPerson)
-      })
+    person.favoriteFoods.push(foodToAdd)
+
+    person.save((err, updatedPerson) => {
+      if (err) return console.error(err)
+      done(null, updatedPerson)
+    })
   })
 };
 
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
 
-  done(null /*, data*/);
+  Person.findOneAndUpdate(
+    {name: personName}, 
+    (err, person) => {
+      if (err) return console.error(err)
+      
+      person.age = ageToSet
+      
+      person.save((err, updatedPerson) => {
+        if (err) return console.error(err)
+        
+        done(null, updatedPerson)
+      })
+    },
+    {new: true}
+  )
 };
 
 const removeById = (personId, done) => {
